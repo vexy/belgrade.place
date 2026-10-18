@@ -1,9 +1,13 @@
 <script lang="ts">
-	import favicon from "#assets/favicon.svg"
-	import "#assets/main.css"
 	import type { LayoutProps } from './$types';
+	import "#assets/main.css"
+	import favicon from "#assets/favicon.svg"
+    import Footer from "#components/Footer.svelte";
 
-	let { children }: LayoutProps = $props();
+	import {PreviewMode} from '@sanity/sveltekit'
+
+	let { data, children }: LayoutProps = $props();
+	const canPreview = $derived(data.previewEnabled)
 </script>
 
 <svelte:head>
@@ -11,6 +15,10 @@
 </svelte:head>
 
 <main>
-	{@render children()}
+	<PreviewMode enabled={canPreview}>
+		{@render children()}
+	</PreviewMode>
 </main>
+
+<Footer />
 

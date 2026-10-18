@@ -1,0 +1,11 @@
+:root {
+    --header-primary: #222222;
+    --header-secondary: #4c4c4c;
+
+    --text-primary: #ffff;
+    --text-secondary: #cccccc;
+
+    --footer-text: #ebebeb;
+    --footer-background: #2c3a27;
+    --footer-links: #dbf1d7;
+}

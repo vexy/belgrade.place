@@ -1,19 +1,13 @@
 {
 	"name": "belgrade.place Website",
-	"private": true,
-	"author": { "name": "Vex", "email": "veljko.tekelerovic@gmail.com"},
 	"version": "0.0.1",
-	"type": "module",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	"author": {
+		"name": "Vex",
+		"email": "veljko.tekelerovic@gmail.com"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^8.0.0",
+		"@sanity/sveltekit": "^2.1.0",
+		"@sveltejs/adapter-vercel": "^7.0.1",
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"svelte": "^5.57.1",
@@ -23,6 +17,17 @@
 	},
 	"imports": {
 		"#lib/*": "./src/lib/*",
-		"#assets/*": "./src/lib/assets/*"
-	}
+		"#assets/*": "./src/lib/assets/*",
+		"#components/*": "./src/lib/components/*"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"type": "module"
 }
