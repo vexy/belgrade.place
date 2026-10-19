@@ -5,7 +5,8 @@ html, body {
 }
 
 main {
-    height: 100svh;
+    min-height: 100svh;
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
@@ -31,4 +32,11 @@ h1, h2, h3 {
 
 .logo {
     width: 5rem;
+}
+
+.card {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 0.35rem;
 }

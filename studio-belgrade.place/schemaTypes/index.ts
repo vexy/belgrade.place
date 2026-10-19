@@ -1,4 +1,6 @@
-import { postType } from "./postTypes"
+import { streetType } from "./postTypes"
 
 // Register all post types for this project
-export const schemaTypes = [postType]
+export const schemaTypes = [
+    streetType
+]

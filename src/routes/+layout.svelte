@@ -4,10 +4,7 @@
 	import favicon from "#assets/favicon.svg"
     import Footer from "#components/Footer.svelte";
 
-	import {PreviewMode} from '@sanity/sveltekit'
-
-	let { data, children }: LayoutProps = $props();
-	const canPreview = $derived(data.previewEnabled)
+	let { children }: LayoutProps = $props();
 </script>
 
 <svelte:head>
@@ -15,9 +12,7 @@
 </svelte:head>
 
 <main>
-	<PreviewMode enabled={canPreview}>
-		{@render children()}
-	</PreviewMode>
+	{@render children()}
 </main>
 
 <Footer />

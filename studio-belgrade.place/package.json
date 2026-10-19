@@ -1,7 +1,7 @@
 {
-  "name": "belgradeplace",
+  "name": "Belgrade.place sanity subproject",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.2",
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
