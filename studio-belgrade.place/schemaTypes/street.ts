@@ -5,7 +5,7 @@ const title = defineField({
     name: 'title',
     type: 'string',
 
-    validation: (rule) => rule.required(),
+    validation: (rule) => rule.required()
 })
 
 const slug = defineField({
@@ -13,25 +13,35 @@ const slug = defineField({
     type: 'slug',
     options: {source: 'title'},
 
-    validation: (rule) => rule.required(),
+    validation: (rule) => rule.required()
 })
 
 const category = defineField({
-    name: 'category',
-    type: 'string',
-    options: {
-      list: [
-        { title: 'Historical figure', value: 'historical-figure' },
-        { title: 'Geographical place', value: 'geo-place' },
-        { title: 'Significant date', value: 'significant-date' },
-      ],
-      layout: 'radio'
-    }
+    name: 'categories',
+    type: 'array',
+    description: 'List of categories this street belongs',
+    of: [
+      {
+        type: 'reference',
+        to: [{ type: 'category' }]
+      }
+    ],
+
+    validation: (rule) => rule.required()
+})
+
+const municipality = defineField({
+    name: 'municipality',
+    title: 'Municipality',
+    type: 'reference',
+    description: "Optional municipality this street belongs to",
+    to: [{ type: 'municipality' }]
 })
 
 const image = defineField({
     name: 'image',
     type: 'object',
+    description: 'Optional: Image associated to this street',
     fields: [
       defineField({
         name: 'image_url',
@@ -56,7 +66,7 @@ const description = defineField({
 const moreInfo = defineField({
     name: 'see_more',
     type: 'url',
-    description: 'External URL for more information'
+    description: 'Optional: External URL for more information'
 })
 
 const publishDate = defineField({
@@ -68,7 +78,7 @@ const publishDate = defineField({
 })
 
 // Final 'street' type post
-export const streetType = defineType({
+export const streetSchema = defineType({
   name: 'street',
   title: 'Street',
   type: 'document',
@@ -76,6 +86,7 @@ export const streetType = defineType({
     title,
     slug,
     category,
+    municipality,
     image,
     description,
     moreInfo,

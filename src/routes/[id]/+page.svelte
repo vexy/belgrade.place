@@ -2,20 +2,18 @@
     import type { PageProps } from './$types';
     import { PortableText } from '@portabletext/svelte'
     import { imageURLFor } from '#lib/ImageTransformer.ts'
+    import { onMount } from 'svelte';
 
     let { data }: PageProps = $props();
 
-    const streets = $derived(data.page);
+    const aStreet = $derived(data.street);
 </script>
+ 
+<header>
+    <h1>{aStreet.title}</h1>
+</header>
 
-
-{#each streets as aStreet }
 <article class="card">
-    <header>
-        <h1>{aStreet.title}</h1>
-        <!-- <h1>Some title</h1> -->
-    </header>
-
     <section>
         {#if aStreet.image}
             {@const imageField = aStreet.image}
@@ -30,17 +28,37 @@
         </section>
     </section>
 
-    <p>Category: {aStreet.category}</p>
+    <!-- TODO: STYLE THIS SECTION -->
+    <div>
+        <h3>Categories</h3>
+        {#each aStreet.categories as aCategory }
+            <a href={`/categories/${aCategory.slug}`}>
+                {aCategory.title}
+            </a>
+        {/each}
+    </div>
+
+    <!-- TODO: STYLE THIS SECTION -->
+    <div>
+        <h3>Municipality</h3>
+        <a href="/municipalities/{aStreet.municipality.slug}">
+            <img src={aStreet.municipality.badges.coat} alt=""/>
+            {aStreet.municipality.title}
+        </a>
+    </div>
 
     {#if aStreet.see_more}
         <a href={aStreet.see_more} target="_blank">Više informacija</a>
     {/if}
 </article>
-{/each}
 
 <a href="/">Back</a>
 
 <style>
+    p {
+        color: black;
+    }
+
     img {
         height: 150px;
     }
