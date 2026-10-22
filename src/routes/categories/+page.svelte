@@ -4,7 +4,14 @@
     let { data }: PageProps = $props();
 </script>
 
-<h1>All street names categories</h1>
+<svelte:head>
+    <title>Belgrade.place - street name categories</title>
+    <link rel="canonical" href="https://belgrade.place/categories" />
+</svelte:head>
+
+<header>
+    <h1>Kategorije naziva ulica</h1>
+</header>
 
 <section>
     {#each data.categories as aCategory }
@@ -17,5 +24,6 @@
         display: inline-flex;
         flex-direction: column;
         gap: 1rem;
+        margin-block: 2rem;
     }
 </style>

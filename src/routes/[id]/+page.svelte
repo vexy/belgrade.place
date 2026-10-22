@@ -2,65 +2,116 @@
     import type { PageProps } from './$types';
     import { PortableText } from '@portabletext/svelte'
     import { imageURLFor } from '#lib/ImageTransformer.ts'
-    import { onMount } from 'svelte';
 
     let { data }: PageProps = $props();
 
     const aStreet = $derived(data.street);
 </script>
+
+<svelte:head>
+    <title>Belgrade.place | {aStreet.title} ulica</title>
+    <link rel="canonical" href="https://belgrade.place/" />
+</svelte:head>
  
 <header>
-    <h1>{aStreet.title}</h1>
+    <h1>{aStreet.title} ulica</h1>
+    {#if aStreet.image}
+        {@const imageField = aStreet.image}
+        <div class="street-image">
+            <img src={imageField.image_url} alt={`${aStreet.title} image`} />
+            <button popovertarget='attribution'>ℹ Izvor slike</button>
+
+            <div id='attribution' popover="hint" class='image-attribution'>
+                {imageField.attribution}
+            </div>
+        </div>
+    {/if}
 </header>
 
-<article class="card">
-    <section>
-        {#if aStreet.image}
-            {@const imageField = aStreet.image}
-            <div class="image-source">
-                <img src={imageField.image_url} alt={`${aStreet.title} image`} />
-                <p>Attribution: {imageField.attribution}</p>
-            </div>
-        {/if}
 
-        <section class="description">
-            <PortableText value={aStreet.description} />
-        </section>
+<article class="card">
+    <h3>Istorija naziva</h3>
+    <section aria-label="Istorijat naziva ulice">
+        <PortableText value={aStreet.description} />
     </section>
 
     <!-- TODO: STYLE THIS SECTION -->
-    <div>
-        <h3>Categories</h3>
+    <h3>Kategorije naziva</h3>
+    <section class='categories'>
         {#each aStreet.categories as aCategory }
             <a href={`/categories/${aCategory.slug}`}>
                 {aCategory.title}
             </a>
         {/each}
-    </div>
+    </section>
 
     <!-- TODO: STYLE THIS SECTION -->
-    <div>
-        <h3>Municipality</h3>
-        <a href="/municipalities/{aStreet.municipality.slug}">
-            <img src={aStreet.municipality.badges.coat} alt=""/>
-            {aStreet.municipality.title}
+    <h3>Pripada opštinama</h3>
+    <section class='municipalities'>
+        {#each aStreet.municipality as municipality}
+        {@const badges = municipality.badges}
+        <a href="/municipalities/{municipality.slug}">
+            {#if badges}
+                {#if badges.coat}
+                    <img src={municipality.badges.coat} alt="{municipality.title} coat"/>
+                {:else if badges.flag}
+                    <img src={municipality.badges.flag} alt="{municipality.title} flag"/>
+                {/if}
+            {/if}
+
+            {municipality.title}
         </a>
-    </div>
+        {/each}
+    </section>
 
     {#if aStreet.see_more}
+    <h3>
         <a href={aStreet.see_more} target="_blank">Više informacija</a>
+    </h3>
     {/if}
 </article>
 
-<a href="/">Back</a>
+<a href="/">Početna</a>
 
 <style>
-    p {
-        color: black;
+    header {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    img {
-        height: 150px;
+    .street-image {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-block: 0.5rem;
+
+        & img {
+            object-fit: scale-down;
+            height: 170px;
+            border-radius: 10px;
+        }
+
+        & :is(button) {
+            appearance: none;
+            border: none;
+            border-radius: 15px;
+            background: #cecece;
+            color: #1d203b;
+            font-size: small;
+            anchor-name: --hint-anchor;
+        }
+    }
+
+    .image-attribution {
+        border-radius: 10px;
+		border: 1px solid #334155;
+		padding: 0.5rem;
+		box-shadow: 1px 2px 5px 1px #334155;
+
+		position-anchor: --hint-anchor;
+		position-area: bottom center;
+		position-try-fallbacks: bottom right;
     }
 
     article {
@@ -68,43 +119,38 @@
         flex-direction: column;
         margin-block: 10px;
         gap: 0.5rem;
+
+        & :is(h3) {
+            margin: unset;
+            padding: 5px;
+            background: #eaeaea;
+            border-radius: 5px;
+            text-align: start;
+        }
     }
 
-    section {
-        display: flex;
+    .categories {
+        display: inline-flex;
         flex-direction: row;
-        justify-content: flex-start;
+        flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    .description {
+    .municipalities {
         display: inline-flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 0.35rem;
-        margin-block: 0.75rem;
-    }
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1.25rem;
 
-    .image-source {
-        display: inline-flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        flex-shrink: 1;
+        & :is(a) {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
 
-        & img {
-            object-fit: scale-down;
-        }
-
-        & p {
-            text-align: center;
-            font-size: 30%;
-        }
-    }
-
-    @media (max-width: 510px) {
-        section {
-            flex-direction: column;
-            flex-wrap: wrap;
+            & :is(img) {
+                height: 50px;
+            }
         }
     }
 </style>

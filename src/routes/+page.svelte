@@ -20,18 +20,17 @@
 
 <header>
     <img class='logo' src={favicon} alt="Website logo" />
-    <h1>Explore street name history</h1>
+    <h1>Istražite istoriju naziva ulice</h1>
 </header>
 
 <section aria-label="Search streets history">
     <div class='search-area'>
-        <input type="text" name='street' placeholder="Search your street..." bind:value={searchTerm} />
-        <button onclick={() => performSearch()} >Search</button>
+        <input type="text" name='street' placeholder="Unesite naziv ulice..." bind:value={searchTerm} />
+        <button onclick={() => performSearch()}>Pretraži</button>
     </div>
 
+    <h3>Istražite po kategoriji naziva</h3>
     <div class='slugs'>
-        <h3>Or, explore by category</h3>
-
         <div>
         {#each data.categories as aCategory }
             <a href={`/categories/${aCategory.slug}`}>{aCategory.title}</a>
@@ -39,9 +38,8 @@
         </div>
     </div>
 
+    <h3>Ili po gradskoj opštini</h3>
     <div class='slugs'>
-        <h3>Or, by city municipality</h3>
-
         <div>
         {#each data.municipalities as aMunicipality}
             <a href={`/municipalities/${aMunicipality.slug}`}>{aMunicipality.title}</a>
@@ -95,13 +93,15 @@
         padding: 0.5rem;
         border: 1px solid gray;
         border-radius: 10px;
-        min-width: 60%;
+        min-width: clamp(50%, 60%, 60%);
+        font-family: inherit;
     }
 
     button {
         padding: 0.5rem;
         border: none;
         border-radius: 5px;
+        font-family: inherit;
 
         &:hover {
             cursor: pointer;

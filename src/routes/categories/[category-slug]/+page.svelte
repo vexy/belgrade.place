@@ -7,7 +7,14 @@
     let pageTitle = $derived(page.params['category-slug'])
 </script>
 
-<h1>All streets for category: {pageTitle?.toUpperCase()}</h1>
+<svelte:head>
+    <title>Belgrade.place | Streets within {pageTitle} category</title>
+    <link rel="canonical" href="https://belgrade.place/categories/{pageTitle}" />
+</svelte:head>
+
+<header>
+    <h1>Kategorija naziva ulice: {pageTitle?.toUpperCase()}</h1>
+</header>
 
 <section>
     {#each data.streets as aStreet }
@@ -17,10 +24,13 @@
     {/each}
 </section>
 
+<a href="/">Home</a>
+
 <style>
     section {
         display: inline-flex;
         flex-direction: column;
         gap: 1rem;
+        margin-block: 2rem;
     }
 </style>

@@ -24,7 +24,7 @@ export const allMunicipalities = defineQuery(
 // Returns street for given municipality slug
 export function streetsForMunicipality(slug: string) {
     return defineQuery(`
-        *[_type == "street" && municipality->slug.current == '${slug}'] {
+        *[_type == "street" && '${slug}' in municipality[]->slug.current] {
             _id,
             title,
             image,
@@ -55,7 +55,7 @@ export function streetForSlug(slug: string) {
                 title,
                 "slug": slug.current
             },
-            municipality->{
+            municipality[] -> {
                 title,
                 "slug": slug.current,
                 badges{
@@ -67,4 +67,15 @@ export function streetForSlug(slug: string) {
             see_more
         }
     `)
+}
+
+export function streetsForSearchTerm(term: string) {
+    return defineQuery(
+        `
+            *[_type == "street" && title match "*${term}*"] {
+                title,
+                "slug": slug.current
+            }
+        `
+    )
 }

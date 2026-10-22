@@ -34,6 +34,13 @@ const badges = defineField({
     ]
 })
 
+const description = defineField({
+    name: 'description',
+    type: 'array',
+    of: [{type: 'block'}],
+    description: 'Optional: Description or short history of municipality'
+})
+
 
 // Final 'municipality' type post
 export const municipalitySchema = defineType({
@@ -43,6 +50,7 @@ export const municipalitySchema = defineType({
   fields: [
     title,
     slug,
-    badges
+    badges,
+    description
   ]
 })

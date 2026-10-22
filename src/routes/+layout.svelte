@@ -9,6 +9,7 @@
 
 <svelte:head>
 	<link rel="icon" type="image/x-icon" href={favicon}>
+	<title>Welcome to Belgrade.place</title>
 </svelte:head>
 
 <main>

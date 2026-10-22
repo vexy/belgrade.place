@@ -33,9 +33,14 @@ const category = defineField({
 const municipality = defineField({
     name: 'municipality',
     title: 'Municipality',
-    type: 'reference',
+    type: 'array',
+    of: [
+      {
+        type: 'reference',
+        to: [{ type: 'municipality' }]
+      }
+    ],
     description: "Optional municipality this street belongs to",
-    to: [{ type: 'municipality' }]
 })
 
 const image = defineField({

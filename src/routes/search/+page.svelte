@@ -12,12 +12,43 @@
     })
 </script>
 
-<h1>Search results for term: {term}</h1>
+<svelte:head>
+    <title>Belgrade.place | Street search</title>
+    <link rel="canonical" href="https://belgrade.place/search" />
+</svelte:head>
+
+<header>
+    <h1>Rezultati pretrage</h1>
+    <p>pretraga po terminu: {term}</p>
+</header>
 
 <section>
     {#each data.streets as aStreet }
-        <a href={`/${aStreet.slug.current}`}>
+        <a href={`/${aStreet.slug}`}>
             {aStreet.title}
         </a>
     {/each}
 </section>
+
+<style>
+    header {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+
+        & h1 {
+            margin: unset;
+        }
+
+        & p {
+            font-size: smaller;
+            font-style: italic;
+        }
+    }
+
+    section {
+        display: inline-grid;
+        gap: 0.75rem;
+        margin-block: 2rem;
+    }
+</style>
